@@ -19,9 +19,9 @@ export default function ProtectedRoute({ children, requiredRole }: Props) {
     return <Navigate to="/" replace />;
   }
 
-  // 🆕 Logged in but wrong role → go to dashboard
+  // 🆕 Logged in but wrong role → go to home
   if (requiredRole && currentUser.role !== requiredRole) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return <>{children}</>;

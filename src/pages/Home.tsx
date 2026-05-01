@@ -22,7 +22,7 @@ import { toggleTheme } from "../features/theme/themeSlice";
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { useGetUsersQuery } from "../features/api/apiSlice";
 
-export default function Dashboard() {
+export default function Home() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -57,7 +57,7 @@ export default function Dashboard() {
       >
         <Box>
           <Typography variant="h4">
-            Dashboard
+            Home
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Welcome, {currentUser.firstName} ({currentUser.role})

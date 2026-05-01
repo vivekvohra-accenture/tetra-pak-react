@@ -1,126 +1,147 @@
-import { useState } from "react";
-import { useNavigate} from "react-router-dom";
-import { useForm } from "react-hook-form";
-import {
-  Alert,
-  Box,
-  Button,
-  Paper,
-  TextField,
-  Typography
-} from "@mui/material";
-import type { SessionUser } from "../types/users";
-import { useAppDispatch } from "../app/hooks";
-import { loginSuccess } from "../features/auth/authSlice";
-import { generateMockToken } from "../utils/mockJwt";
-import { useLazyGetUserByEmailQuery } from "../features/api/apiSlice";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../app/hooks';
+import { loginSuccess } from '../features/auth/authSlice'; 
+import { useLazyGetUserByEmailQuery } from '../features/api/apiSlice';
+import { generateMockToken } from '../utils/mockJwt';
+import './Login.css';
 
-export default function Login() {
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [getUserByEmail] = useLazyGetUserByEmailQuery();
+  const [triggerGetUser] = useLazyGetUserByEmailQuery();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
-      email: "",
-      password: ""
-    }
-  });
-
-  const [authError, setAuthError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const onSubmit = async (data: Record<string, string>) => {
-    setAuthError("");
-    setLoading(true);
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      // Instead of sending password in URL query, fetch by email and verify password
-      const users = await getUserByEmail(data.email).unwrap();
-
-      if (!users || users.length === 0) {
-        setAuthError("Invalid email or password");
-        setLoading(false);
-        return;
+      const users = await triggerGetUser(email).unwrap();
+      if (users && users.length > 0) {
+        const user = users[0];
+        if (user.password === password) {
+          const sessionUser = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            mobile: user.mobile,
+            role: user.role
+          };
+          const token = generateMockToken(sessionUser);
+          dispatch(loginSuccess({ user: sessionUser, token }));
+          navigate('/home');
+        } else {
+          alert('Incorrect password');
+        }
+      } else {
+        alert('User not found');
       }
+    } catch (error) {
+      console.error('Login failed', error);
+      alert('Login failed');
+    }
+  };
 
-      const user = users[0];
-
-      if (user.password !== data.password) {
-        setAuthError("Invalid email or password");
-        setLoading(false);
-        return;
+  const handleDemoLogin = async (role: 'ADMIN' | 'USER') => {
+    const demoEmail = role === 'ADMIN' ? 'admin@test.com' : 'vivek@test.com';
+    const demoPassword = role === 'ADMIN' ? 'admin123' : 'user123';
+    
+    try {
+      const users = await triggerGetUser(demoEmail).unwrap();
+      if (users && users.length > 0) {
+        const user = users[0];
+        if (user.password === demoPassword) {
+          const sessionUser = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            mobile: user.mobile,
+            role: user.role
+          };
+          const token = generateMockToken(sessionUser);
+          dispatch(loginSuccess({ user: sessionUser, token }));
+          navigate('/home');
+        }
       }
-
-      const sessionUser: SessionUser = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        mobile: user.mobile,
-        role: user.role
-      };
-      
-      const token = generateMockToken(sessionUser);
-      dispatch(loginSuccess({ user: sessionUser, token }));
-
-      navigate("/dashboard");
-    } catch {
-      setAuthError("Something went wrong while logging in");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error('Demo login failed', err);
     }
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        px: 2
-      }}
-    >
-      <Paper elevation={3} sx={{ width: 360, p: 4, borderRadius: 3 }}>
-        <Typography variant="h5" sx={{ textAlign: "center", mb: 3 }}>
-          Login
-        </Typography>
+    <div className="page-container">
+      {/* Left Side: Background Image Area */}
+      <div className="image-section">
+        {/* We apply scaleX(-1) again to the overlay so the text doesn't appear backwards! */}
+        <div className="image-overlay">
+          <h1 className="overlay-title">Digital Manufacturing Platform</h1>
+          <p className="overlay-subtitle">Streamlining quality checks and factory floor operations.</p>
+        </div>
+      </div>
 
-        {authError && <Alert severity="error" sx={{ mb: 2 }}>{authError}</Alert>}
+      {/* Right Side: Login Form Area */}
+      <div className="form-section">
+        <div className="form-container">
+          
+          <div className="header">
+            <h2 className="logo">Tetra Pak<sup className="sup">®</sup></h2>
+            <p className="welcome-text">Welcome back. Please sign in to your account.</p>
+          </div>
 
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            fullWidth
-            label="Email"
-            type="email"
-            margin="normal"
-            {...register("email", { required: "Email is required" })}
-            error={!!errors.email}
-            helperText={errors.email?.message}
-          />
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="input-group">
+              <label className="input-label">Email</label>
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="text-input" 
+                placeholder="Enter your email"
+                required 
+              />
+            </div>
+            <div className="input-group">
+              <label className="input-label">Password</label>
+              <input 
+                type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="text-input" 
+                placeholder="••••••••"
+                required 
+              />
+            </div>
+            <button type="submit" className="primary-button">Sign In</button>
+          </form>
 
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            margin="normal"
-            {...register("password", { required: "Password is required" })}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-          />
+          <div className="demo-section">
+            <div className="divider">
+              <span className="divider-text">Reviewer Demo Mode</span>
+            </div>
+            <div className="demo-buttons">
+              <button 
+                onClick={() => handleDemoLogin('ADMIN')} 
+                type="button"
+                className="demo-button btn-admin"
+              >
+                Login as TpAdmin (Admin)
+              </button>
+              <button 
+                onClick={() => handleDemoLogin('USER')} 
+                type="button"
+                className="demo-button btn-operator"
+              >
+                Login as TpUser (Operator)
+              </button>
+            </div>
+          </div>
 
-          <Button
-            fullWidth
-            variant="contained"
-            type="submit"
-            sx={{ mt: 2 }}
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
-        </Box>
-      </Paper>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default Login;
