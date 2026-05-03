@@ -11,10 +11,6 @@
     "mock": "json-server --watch db.json --port 3001"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^9.0.0",
-    "@mui/material": "^9.0.0",
     "@reduxjs/toolkit": "^2.11.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -43,5 +39,5 @@
   },
   "extensionDependencies": [
     "vscode.git"
-]
+  ]
 }

@@ -1,33 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  CircularProgress
-} from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { logout } from "../features/auth/authSlice";
-import { toggleTheme } from "../features/theme/themeSlice";
-import { DarkMode, LightMode } from "@mui/icons-material";
 import { useGetUsersQuery } from "../features/api/apiSlice";
+import "./Home.css";
 
 export default function Home() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  // Add theme mode reading:
-  const themeMode = useAppSelector((state) => state.theme.mode);
   const currentUser = useAppSelector((state) => state.auth.currentUser);
 
   // RTK Query handles loading, data, and error automatically!
@@ -46,88 +26,67 @@ export default function Home() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 4
-        }}
-      >
-        <Box>
-          <Typography variant="h4">
-            Home
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
+    <div className="home-container">
+      <div className="home-header">
+        <div>
+          <h2>Home</h2>
+          <p className="welcome-text">
             Welcome, {currentUser.firstName} ({currentUser.role})
-          </Typography>
-        </Box>
+          </p>
+        </div>
 
-        <Button variant="outlined" color="error" onClick={handleLogout}>
+        <button className="logout-button" onClick={handleLogout}>
           Logout
-        </Button>
+        </button>
+      </div>
 
-        
-        <IconButton onClick={() => dispatch(toggleTheme())} color="primary">
-          {themeMode === "light" ? <DarkMode /> : <LightMode />}
-        </IconButton>
-
-      </Box>
-
-      {isError && <Alert severity="error" sx={{ mb: 3 }}>Failed to load users</Alert>}
+      {isError && <div className="error-alert">Failed to load users</div>}
 
       {currentUser.role === "ADMIN" ? (
-        <Paper elevation={3} sx={{ borderRadius: 3, overflow: "hidden" }}>
-          <Box sx={{ p: 2 }}>
-            <Typography variant="h6">All Users</Typography>
-          </Box>
+        <div className="admin-panel">
+          <div className="panel-header">
+            <h3>All Users</h3>
+          </div>
 
           {isLoading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-              <CircularProgress />
-            </Box>
+            <div className="loading-container">
+              <span>Loading...</span>
+            </div>
           ) : (
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell><strong>First Name</strong></TableCell>
-                  <TableCell><strong>Last Name</strong></TableCell>
-                  <TableCell><strong>Email</strong></TableCell>
-                  <TableCell><strong>Mobile</strong></TableCell>
-                  <TableCell><strong>Role</strong></TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
+            <table className="users-table">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
                 {allUsers.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell>{user.firstName}</TableCell>
-                    <TableCell>{user.lastName}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.mobile}</TableCell>
-                    <TableCell>{user.role}</TableCell>
-                  </TableRow>
+                  <tr key={user.id}>
+                    <td>{user.firstName}</td>
+                    <td>{user.lastName}</td>
+                    <td>{user.email}</td>
+                    <td>{user.mobile}</td>
+                    <td>{user.role}</td>
+                  </tr>
                 ))}
-              </TableBody>
-            </Table>
+              </tbody>
+            </table>
           )}
-        </Paper>
+        </div>
       ) : (
-        <Card elevation={3} sx={{ maxWidth: 500, borderRadius: 3 }}>
-          <CardContent>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              My Profile
-            </Typography>
-
-            <Typography><strong>First Name:</strong> {currentUser.firstName}</Typography>
-            <Typography><strong>Last Name:</strong> {currentUser.lastName}</Typography>
-            <Typography><strong>Email:</strong> {currentUser.email}</Typography>
-            <Typography><strong>Mobile:</strong> {currentUser.mobile}</Typography>
-            <Typography><strong>Role:</strong> {currentUser.role}</Typography>
-          </CardContent>
-        </Card>
+        <div className="profile-card">
+          <h3>My Profile</h3>
+          <p><strong>First Name:</strong> {currentUser.firstName}</p>
+          <p><strong>Last Name:</strong> {currentUser.lastName}</p>
+          <p><strong>Email:</strong> {currentUser.email}</p>
+          <p><strong>Mobile:</strong> {currentUser.mobile}</p>
+          <p><strong>Role:</strong> {currentUser.role}</p>
+        </div>
       )}
-    </Container>
+    </div>
   );
 }

@@ -1,0 +1,84 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.home-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+}
+
+.welcome-text {
+  margin: 0;
+  color: #666;
+}
+
+.logout-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #dc3545;
+  background: transparent;
+  color: #dc3545;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.logout-button:hover {
+  background: #dc3545;
+  color: white;
+}
+
+.error-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.admin-panel, .profile-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.panel-header h3 {
+  margin-top: 0;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th, .users-table td {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.users-table th {
+  font-weight: 600;
+  background-color: #f9f9f9;
+}
+
+.profile-card p {
+  margin: 0.5rem 0;
+}
