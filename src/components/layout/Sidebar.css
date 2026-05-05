@@ -1,0 +1,63 @@
+/* src/components/layout/Sidebar.css */
+
+.app-sidebar {
+  width: 90px; /* Fixed narrow width for the stacked icon/text layout */
+  background-color: #0f3a61; /* Tetra Pak Corporate Blue */
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0; /* Prevents the sidebar from squishing on small screens */
+  overflow-y: auto; /* Allows scrolling if the menu gets too tall */
+  
+  /* Hide scrollbar for a cleaner look but keep functionality */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.app-sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  text-decoration: none;
+  color: #94a3b8; /* Faded grey/blue for inactive items */
+  transition: all 0.2s ease-in-out;
+  border-left: 4px solid transparent; /* Placeholder to prevent jumping when active */
+}
+
+.nav-item:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.nav-icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.nav-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* 
+  The Active State 
+  This triggers automatically via React Router's <NavLink>
+*/
+.nav-item.active {
+  background-color: #f4f7f9; /* Matches the dashboard-content background */
+  color: #0f3a61; /* Dark blue text */
+  border-left: 4px solid #0f3a61; /* Optional highlight border */
+  /* This creates the illusion that the tab is "connected" to the main page */
+}

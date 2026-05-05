@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { logout } from "../features/auth/authSlice";
+import { useAppSelector } from "../app/hooks";
 import { useGetUsersQuery } from "../features/api/apiSlice";
 import "./Home.css";
 
-export default function Home() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+// 1. Notice we REMOVED the DashboardLayout import entirely!
+// 2. We REMOVED the logout logic because the Header handles it now.
 
+export default function Home() {
   const currentUser = useAppSelector((state) => state.auth.currentUser);
 
   // RTK Query handles loading, data, and error automatically!
@@ -16,36 +14,25 @@ export default function Home() {
     skip: currentUser?.role !== "ADMIN"
   });
 
-  const handleLogout = () => {
-    dispatch(logout());          // clears Redux + localStorage automatically
-    navigate("/");
-  };
-
   if (!currentUser) {
     return null;
   }
 
   return (
     <div className="home-container">
-      <div className="home-header">
-        <div>
-          <h2>Home</h2>
-          <p className="welcome-text">
-            Welcome, {currentUser.firstName} ({currentUser.role})
-          </p>
-        </div>
-
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
+      
+      {/* Welcome Message specific to the Home page content area */}
+      <h2 style={{ color: '#0f3a61', marginBottom: '24px' }}>
+        Welcome to the Tetra Pak Digital Platform
+      </h2>
 
       {isError && <div className="error-alert">Failed to load users</div>}
 
+      {/* Admin View */}
       {currentUser.role === "ADMIN" ? (
         <div className="admin-panel">
           <div className="panel-header">
-            <h3>All Users</h3>
+            <h3>All Users (Admin View)</h3>
           </div>
 
           {isLoading ? (
@@ -78,8 +65,9 @@ export default function Home() {
           )}
         </div>
       ) : (
+        /* Operator View */
         <div className="profile-card">
-          <h3>My Profile</h3>
+          <h3>My Profile (Operator View)</h3>
           <p><strong>First Name:</strong> {currentUser.firstName}</p>
           <p><strong>Last Name:</strong> {currentUser.lastName}</p>
           <p><strong>Email:</strong> {currentUser.email}</p>
