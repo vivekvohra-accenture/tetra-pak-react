@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
+// src/router.tsx
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "./auth/Login";
 import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -6,10 +7,15 @@ import DashboardLayout from "./components/layout/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
-    path: "*",
+    path: "/",
+    element: <Navigate to="/login" replace />
+  },
+  {
+    path: "/login",
     element: <Login />
   },
   {
+    // Keeping your original parent route intact!
     path: "/home",
     element: (
       <ProtectedRoute>
@@ -22,37 +28,27 @@ export const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "plan",
-        element: <div>Plan page Coming Soon</div>
+        path: "preferences",
+        element: <div className="page-container"><h2>Preferences</h2><p>Coming Soon</p></div>
       },
-      {
-        path: "preference",
-        element: <div>Preference page Coming Soon</div>
-      },
-      {
-        path: "execute",
-        element: <div>Execute page Coming Soon</div>
-      },
-      {
-        path: "configure",
-        element: <div>Configure page Coming Soon</div>
-        },
-      {
-        path: "set-up",
-        element: <div>Set-up page Coming Soon</div>
-      },
-      {
-        path: "manual",
-        element: <div>Manual page Coming Soon</div>
-      },
-      {
-        path: "monitor",
-        element: <div>Monitor page Coming Soon</div>
-      },
-      {
-        path: "analyse",
-        element: <div>Analyse page Coming Soon</div>
-      }
+      // --- The Category Placeholders (Using Wildcards) ---
+      // --- The Category Placeholders ---
+      // Rendering 'null' leaves the right side completely empty, 
+      // showing ONLY the beautiful factory background image!
+      { path: "plan/*", element: null },
+      
+      { path: "execute/quality-checks", element: null},//<QualityChecks /> },
+      { path: "execute/*", element: null }, // Catch-all for the other Execute links
+      
+      { path: "monitor/*", element: null },
+      { path: "analyse/*", element: null },
+      { path: "configure/*", element: null },
+      { path: "set-up/*", element: null },
+      { path: "manual/*", element: null }
     ]
+  },
+  {
+    path: "*",
+    element: <Navigate to="/login" replace />
   }
 ]);

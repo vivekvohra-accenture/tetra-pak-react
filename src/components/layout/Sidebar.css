@@ -1,26 +1,27 @@
 /* src/components/layout/Sidebar.css */
 
 .app-sidebar {
-  width: 90px; /* Fixed narrow width for the stacked icon/text layout */
+  width: 90px;
   background-color: #0f3a61; /* Tetra Pak Corporate Blue */
   display: flex;
   flex-direction: column;
-  flex-shrink: 0; /* Prevents the sidebar from squishing on small screens */
-  overflow-y: auto; /* Allows scrolling if the menu gets too tall */
+  flex-shrink: 0;
+  height: 100%; /* Ensures the sidebar takes up the full screen height */
+  overflow-y: auto; 
   
-  /* Hide scrollbar for a cleaner look but keep functionality */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
 }
 
 .app-sidebar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none; 
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%; /* Required so the flex items know how much space they have */
 }
 
 .nav-item {
@@ -28,11 +29,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80px;
+  height: 72px; /* Slightly reduced height to match the screenshot density */
   text-decoration: none;
-  color: #94a3b8; /* Faded grey/blue for inactive items */
+  color: #cbd5e1; /* Slightly brighter grey/blue for better contrast */
   transition: all 0.2s ease-in-out;
-  border-left: 4px solid transparent; /* Placeholder to prevent jumping when active */
+  border-left: 4px solid transparent; 
+  
+  /* Adds the subtle horizontal separator line seen in the screenshot */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
+}
+
+/* 
+  The Magic Trick:
+  This targets the very last link (Manual) and pushes it all the way down 
+*/
+.nav-item:last-child {
+  margin-top: auto; 
+  border-bottom: none; /* Removes the separator line below the last item */
+  margin-bottom: 16px; /* Adds a little breathing room at the bottom of the screen */
 }
 
 .nav-item:hover {
@@ -41,8 +55,8 @@
 }
 
 .nav-icon {
-  font-size: 24px;
-  margin-bottom: 6px;
+  font-size: 20px; /* Reduced from 24px as requested */
+  margin-bottom: 4px; /* Slightly tighter spacing between icon and text */
 }
 
 .nav-label {
@@ -51,13 +65,8 @@
   text-align: center;
 }
 
-/* 
-  The Active State 
-  This triggers automatically via React Router's <NavLink>
-*/
 .nav-item.active {
-  background-color: #f4f7f9; /* Matches the dashboard-content background */
-  color: #0f3a61; /* Dark blue text */
-  border-left: 4px solid #0f3a61; /* Optional highlight border */
-  /* This creates the illusion that the tab is "connected" to the main page */
+  background-color: #f4f7f9; 
+  color: #0f3a61; 
+  border-left: 4px solid #0f3a61; 
 }

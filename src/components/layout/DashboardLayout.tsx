@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import './DashboardLayout.css';
 import Sidebar from './Sidebar';
+import SecondarySidebar from './SecondarySidebar';
 const DashboardLayout = () => {
   return (
     <div className="dashboard-wrapper">
@@ -10,6 +11,8 @@ const DashboardLayout = () => {
       
       <div className="dashboard-body">
         <Sidebar />
+
+        <SecondarySidebar />
         
         <main className="dashboard-content">
             {/* Outlet is the placeholder where all the child component of the path(using dashboardLayout) will be injected */}

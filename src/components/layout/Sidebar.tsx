@@ -1,38 +1,10 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { 
-  FaHome, 
-  FaListUl, 
-  FaClipboardCheck, 
-  FaChartLine, 
-  FaSync, 
-  FaSlidersH, 
-  FaCog, 
-  FaBook 
-} from 'react-icons/fa';
+
+// 1. IMPORT the data instead of writing it here!
+import { menuItems } from '../../config/menuConfig';
+
 import './Sidebar.css';
-
-// 1. Define the TypeScript interface for our menu items
-interface MenuItem {
-  label: string;
-  path: string;
-  icon: React.ElementType;
-  allowedRoles: string[]; // E.g., ['ADMIN', 'USER']
-}
-
-// 2. The Data-Driven Menu Configuration
-// This acts as the "Single Source of Truth" for sidebar navigation and security
-const menuItems: MenuItem[] = [
-  { label: 'Home', path: '/home', icon: FaHome, allowedRoles: ['ADMIN', 'USER'] },
-  { label: 'Plan', path: '/home/plan', icon: FaListUl, allowedRoles: ['ADMIN'] },
-  { label: 'Execute', path: '/home/execute', icon: FaClipboardCheck, allowedRoles: ['ADMIN', 'USER'] },
-  { label: 'Monitor', path: '/home/monitor', icon: FaChartLine, allowedRoles: ['ADMIN', 'USER'] },
-  { label: 'Analyse', path: '/home/analyse', icon: FaSync, allowedRoles: ['ADMIN'] },
-  { label: 'Configure', path: '/home/configure', icon: FaSlidersH, allowedRoles: ['ADMIN'] },
-  { label: 'Set-up', path: '/home/set-up', icon: FaCog, allowedRoles: ['ADMIN'] },
-  { label: 'Manual', path: '/home/manual', icon: FaBook, allowedRoles: ['ADMIN', 'USER'] },
-];
 
 const Sidebar = () => {
   // Grab the current user's role from Redux (fallback to 'USER' for safety)
