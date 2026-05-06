@@ -122,32 +122,83 @@
 }
 
 /* Floating Dropdown Styles */
+/* Floating Dropdown Styles - Updated for Dark Theme */
 .user-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
-  margin-top: 8px;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  margin-top: 12px;
+  background-color: #0f3a61; /* Corporate Blue */
   border-radius: 6px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  min-width: 160px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  min-width: 260px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  padding: 20px;
+  color: #ffffff;
+  z-index: 200;
+}
+
+.dropdown-header-info {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.header-pipe {
+  color: rgba(255, 255, 255, 0.4);
+  margin-left: 4px;
+  font-weight: 300;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 12px 0;
 }
 
 .dropdown-item {
-  padding: 12px 16px;
-  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
   background: none;
   border: none;
   font-size: 14px;
-  color: #334155;
+  color: #ffffff;
   cursor: pointer;
-  transition: background-color 0.2s;
+  text-align: left;
+  transition: opacity 0.2s ease;
 }
 
 .dropdown-item:hover {
-  background-color: #f1f5f9;
+  opacity: 0.7;
+  background-color: transparent; /* Prevents the white hover background from before */
+}
+
+.dropdown-icon {
+  font-size: 16px;
+}
+
+/* The Outlined Logout Button */
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ffffff;
+  color: #0f3a61;
 }

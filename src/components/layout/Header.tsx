@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { logout } from '../../features/auth/authSlice';
 import { format } from 'date-fns';
-import { FaBell, FaCaretDown } from 'react-icons/fa';
+import { FaBell, FaCaretDown,FaSignOutAlt,FaStar} from 'react-icons/fa';
 import './Header.css';
 
 const Header = () => {
@@ -87,10 +87,33 @@ const Header = () => {
           <FaCaretDown className="icon-caret" />
 
           {/* Floating Dropdown Menu */}
+          {/* Floating Dropdown Menu */}
           {isDropdownOpen && (
             <div className="user-dropdown">
-              <button onClick={handlePreferences} className="dropdown-item">Preferences</button>
-              <button onClick={handleLogout} className="dropdown-item">Logout</button>
+              
+              {/* Dropdown Header */}
+              <div className="dropdown-header-info">
+                {currentUser?.firstName} {currentUser?.lastName || currentUser?.firstName} <span className="header-pipe">|</span>
+              </div>
+              
+              <div className="dropdown-divider"></div>
+              
+              {/* Links */}
+              <button onClick={handlePreferences} className="dropdown-item">
+                <FaStar className="dropdown-icon" /> Preferences
+              </button>
+              
+              <button className="dropdown-item">
+                <FaBell className="dropdown-icon" /> Notification settings
+              </button>
+              
+              <div className="dropdown-divider"></div>
+              
+              {/* Logout Button */}
+              <button onClick={handleLogout} className="logout-btn">
+                <FaSignOutAlt className="dropdown-icon" /> Logout
+              </button>
+              
             </div>
           )}
         </div>

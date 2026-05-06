@@ -4,6 +4,7 @@ import Login from "./auth/Login";
 import Home from "./pages/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardLayout from "./components/layout/DashboardLayout";
+import Preferences from "./pages/Preferences";
 
 export const router = createBrowserRouter([
   {
@@ -28,13 +29,11 @@ export const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "preferences",
-        element: <div className="page-container"><h2>Preferences</h2><p>Coming Soon</p></div>
+        path: "preference",
+        element: <Preferences />
       },
-      // --- The Category Placeholders (Using Wildcards) ---
-      // --- The Category Placeholders ---
-      // Rendering 'null' leaves the right side completely empty, 
-      // showing ONLY the beautiful factory background image!
+
+      
       { path: "plan/*", element: null },
       
       { path: "execute/quality-checks", element: null},//<QualityChecks /> },
