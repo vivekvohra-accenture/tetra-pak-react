@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
+import "./i18n"; // Import i18n to initialize it
 
 // We wrap the entire app in Redux Provider here, so the Store is accessible everywhere.
 ReactDOM.createRoot(document.getElementById("root")!).render(

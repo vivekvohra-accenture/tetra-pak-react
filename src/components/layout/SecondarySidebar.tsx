@@ -1,16 +1,19 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
+import { useTranslation } from 'react-i18next';
 import { menuItems } from '../../config/menuConfig';
 import './SecondarySidebar.css';
 
 const SecondarySidebar = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const currentUser = useAppSelector((state) => state.auth.currentUser);
   const userRole = currentUser?.role || 'USER';
 
   // 1. Find which Primary section we are currently in (e.g., "/execute")
+  // Using exact match so the secondary sidebar hides itself when a sub-item page loads
   const activeSection = menuItems.find(item => 
-    item.path !== '/home' && location.pathname.startsWith(item.path)
+    item.path !== '/home' && location.pathname.replace(/\/$/, '') === item.path
   );
 
   // 2. If the active section doesn't have sub-items (like "Home"), render nothing!
@@ -26,7 +29,7 @@ const SecondarySidebar = () => {
   return (
     <aside className="secondary-sidebar">
       <div className="secondary-sidebar-header">
-        <h2>{activeSection.label}</h2>
+        <h2>{t(activeSection.label)}</h2>
       </div>
       <nav className="secondary-nav">
         {authorizedSubMenu.map((subItem) => (
@@ -35,7 +38,7 @@ const SecondarySidebar = () => {
             to={subItem.path}
             className={({ isActive }) => isActive ? "sub-nav-item active" : "sub-nav-item"}
           >
-            {subItem.label}
+            {t(subItem.label)}
           </NavLink>
         ))}
       </nav>

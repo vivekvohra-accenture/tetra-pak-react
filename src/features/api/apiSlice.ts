@@ -2,6 +2,24 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { UserDb } from '../../types/users';
 import type { RootState } from '../../app/store';
 
+export interface QualityCheckRecord {
+  id: string;
+  line: string;
+  samplingPoint: string;
+  date: string;
+  time: string;
+  occasion: string;
+  testArea: string;
+  samples: string;
+  productType: string;
+  productBrandName: string;
+  batchId: string;
+  expectedInsertionDate: string;
+  buc: boolean;
+  status: string;
+}
+
+
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -15,7 +33,8 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ['User'],
+  tagTypes: ['User', 'QualityCheck'], // Add tags for cache management
+
   endpoints: (builder) => ({
     getUsers: builder.query<UserDb[], void>({
       query: () => '/users',
@@ -32,6 +51,28 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ['User'], // Invalidate users list when a new user is created
     }),
+
+    getQualityChecks: builder.query<QualityCheckRecord[], { status: string; lines?: string[] }>({
+        query: (filters) => {
+        // Start building the query string for json-server
+        let queryString = '/qualityChecks?';
+
+        // Filter by the active tab (New, Pending, Completed)
+        if (filters.status) {
+          queryString += `status=${filters.status}&`;
+        }
+
+        // If lines were selected in the drawer, append them (json-server handles multiple of the same parameter as an OR filter)
+        if (filters.lines && filters.lines.length > 0) {
+          filters.lines.forEach((line) => {
+            queryString += `line=${encodeURIComponent(line)}&`;
+          });
+        }
+        // Remove the trailing '&' or '?' for a clean URL
+        return queryString.slice(0, -1);
+      },
+      providesTags: ['QualityCheck'],
+    }),
   }),
 });
 
@@ -39,4 +80,5 @@ export const {
   useGetUsersQuery,
   useLazyGetUserByEmailQuery,
   useCreateUserMutation,
+  useGetQualityChecksQuery
 } = apiSlice;

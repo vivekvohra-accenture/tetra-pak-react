@@ -3,13 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { logout } from '../../features/auth/authSlice';
 import { format } from 'date-fns';
-import { FaBell, FaCaretDown,FaSignOutAlt,FaStar} from 'react-icons/fa';
+import { FaBell, FaCaretDown, FaSignOutAlt, FaStar } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './Header.css';
 
 const Header = () => {
   // 1. Local State for Clock and Dropdown
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { t } = useTranslation();
   
   // 2. Global State & Hooks
   const currentUser = useAppSelector((state) => state.auth.currentUser);
@@ -76,7 +78,7 @@ const Header = () => {
           className="header-user-section" 
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
-          <span className="logged-in-text">Logged in as:</span>
+          <span className="logged-in-text">{t("Logged in as:")}</span>
           {/* Fallback to 'Guest' if Redux state is missing */}
           <span className="user-name">{currentUser?.firstName || 'Guest'}</span>
           
@@ -100,18 +102,18 @@ const Header = () => {
               
               {/* Links */}
               <button onClick={handlePreferences} className="dropdown-item">
-                <FaStar className="dropdown-icon" /> Preferences
+                <FaStar className="dropdown-icon" /> {t("Preferences")}
               </button>
               
               <button className="dropdown-item">
-                <FaBell className="dropdown-icon" /> Notification settings
+                <FaBell className="dropdown-icon" /> {t("Notification settings")}
               </button>
               
               <div className="dropdown-divider"></div>
               
               {/* Logout Button */}
               <button onClick={handleLogout} className="logout-btn">
-                <FaSignOutAlt className="dropdown-icon" /> Logout
+                <FaSignOutAlt className="dropdown-icon" /> {t("Logout")}
               </button>
               
             </div>

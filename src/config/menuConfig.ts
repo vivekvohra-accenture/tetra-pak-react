@@ -40,7 +40,7 @@ export const menuItems: MenuItem[] = [
     subItems: [
       { label: 'Manual sampling', path: '/home/execute/manual-sampling', allowedRoles: ['ADMIN', 'USER'] },
       { label: 'Product registration', path: '/home/execute/product-registration', allowedRoles: ['ADMIN', 'USER'] },
-      { label: 'Quality checks', path: '/home/execute/quality-checks', allowedRoles: ['ADMIN', 'USER'] },
+      { label: 'Quality checks', path: '/home/execute/quality-checks', allowedRoles: ['ADMIN'] },
       { label: 'Quality batch approval', path: '/home/execute/batch-approval', allowedRoles: ['ADMIN'] },
       { label: 'Big Unsterility Cases', path: '/home/execute/unsterility-cases', allowedRoles: ['ADMIN', 'USER'] },
       { label: 'Claims register', path: '/home/execute/claims', allowedRoles: ['ADMIN'] },

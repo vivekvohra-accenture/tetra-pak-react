@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
+import { useTranslation } from 'react-i18next';
 
 // 1. IMPORT the data instead of writing it here!
 import { menuItems } from '../../config/menuConfig';
@@ -7,6 +8,8 @@ import { menuItems } from '../../config/menuConfig';
 import './Sidebar.css';
 
 const Sidebar = () => {
+  const { t } = useTranslation();
+
   // Grab the current user's role from Redux (fallback to 'USER' for safety)
   const currentUser = useAppSelector((state) => state.auth.currentUser);
   const userRole = currentUser?.role || 'USER';
@@ -33,7 +36,7 @@ const Sidebar = () => {
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
             >
               <IconComponent className="nav-icon" />
-              <span className="nav-label">{item.label}</span>
+              <span className="nav-label">{t(item.label)}</span>
             </NavLink>
           );
         })}

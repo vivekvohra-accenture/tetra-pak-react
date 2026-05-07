@@ -1,44 +1,48 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './Preferences.css';
 
 const Preferences = () => {
-  // We store the language in state so you can easily wire this up to i18n later!
-  const [language, setLanguage] = useState('English (United States)');
+  const { t, i18n } = useTranslation();
+
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    i18n.changeLanguage(e.target.value);
+  };
 
   return (
     <div className="preferences-container">
-      <h1 className="page-title">User Preferences</h1>
+      <h1 className="page-title">{t("User Preferences")}</h1>
 
       <div className="preferences-card">
-        <h2 className="card-subtitle">Preferences</h2>
+        <h2 className="card-subtitle">{t("Preferences")}</h2>
 
         <div className="preferences-grid">
           
           {/* Row 1 */}
           <div className="pref-item password-section">
-            <span className="pref-label bold">Change password</span>
+            <span className="pref-label bold">{t("Change password")}</span>
             <button className="change-pwd-btn">
-              Change your password <FaChevronRight className="chevron-icon" />
+              {t("Change password")} <FaChevronRight className="chevron-icon" />
             </button>
           </div>
 
           <div className="pref-item">
-            <label className="pref-label">Language</label>
+            <label className="pref-label">{t("Language")}</label>
             <select 
               className="pref-select"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
+              value={i18n.language || 'en'}
+              onChange={handleLanguageChange}
             >
-              <option value="English (United States)">English (United States)</option>
-              <option value="Svenska">Svenska (Swedish)</option>
-              <option value="Español">Español (Spanish)</option>
+              <option value="en">English (United States)</option>
+              <option value="sv">Svenska (Swedish)</option>
+              <option value="es">Español (Spanish)</option>
             </select>
           </div>
 
           {/* Row 2 */}
           <div className="pref-item">
-            <label className="pref-label">Short date format</label>
+            <label className="pref-label">{t("Short date format")}</label>
             <select className="pref-select" defaultValue="dd/mm/yyyy">
               <option value="dd/mm/yyyy">dd/mm/yyyy</option>
               <option value="mm/dd/yyyy">mm/dd/yyyy</option>
@@ -47,7 +51,7 @@ const Preferences = () => {
           </div>
 
           <div className="pref-item">
-            <label className="pref-label">Short time format</label>
+            <label className="pref-label">{t("Short time format")}</label>
             <select className="pref-select" defaultValue="hh:mm AM/PM">
               <option value="hh:mm AM/PM">hh:mm AM/PM</option>
               <option value="HH:mm">HH:mm (24-hour)</option>
@@ -56,7 +60,7 @@ const Preferences = () => {
 
           {/* Row 3 */}
           <div className="pref-item">
-            <label className="pref-label">Long date format</label>
+            <label className="pref-label">{t("Long date format")}</label>
             <select className="pref-select" defaultValue="DAY DD MONTH YYYY">
               <option value="DAY DD MONTH YYYY">DAY DD MONTH YYYY</option>
               <option value="Month DD, YYYY">Month DD, YYYY</option>
@@ -64,7 +68,7 @@ const Preferences = () => {
           </div>
 
           <div className="pref-item">
-            <label className="pref-label">Long time format</label>
+            <label className="pref-label">{t("Long time format")}</label>
             <select className="pref-select" defaultValue="hh:mm:ss AM/PM">
               <option value="hh:mm:ss AM/PM">hh:mm:ss AM/PM</option>
               <option value="HH:mm:ss">HH:mm:ss (24-hour)</option>
