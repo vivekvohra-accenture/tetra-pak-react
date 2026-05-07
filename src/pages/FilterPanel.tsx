@@ -1,5 +1,5 @@
 // src/pages/FilterPanel.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaTimes, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 

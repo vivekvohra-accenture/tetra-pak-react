@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import './Preferences.css';

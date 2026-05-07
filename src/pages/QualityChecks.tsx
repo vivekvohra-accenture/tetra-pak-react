@@ -1,5 +1,5 @@
 // src/pages/QualityChecks.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaFilter, FaPlus, FaPen, FaCog } from 'react-icons/fa';
 import FilterPanel from './FilterPanel';
 import SamplingModal from './SamplingModal';
