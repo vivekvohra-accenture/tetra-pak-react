@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAddQualityCheckMutation } from '../features/api/apiSlice';
 
 interface SamplingModalProps {
   onClose: () => void;
@@ -7,6 +8,9 @@ interface SamplingModalProps {
 
 export default function SamplingModal({ onClose }: SamplingModalProps) {
   const { t } = useTranslation();
+  const [addQualityCheck, { isLoading }] = useAddQualityCheckMutation();
+  
+  const [line, setLine] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [currentTime, setCurrentTime] = useState('');
 
@@ -25,6 +29,46 @@ export default function SamplingModal({ onClose }: SamplingModalProps) {
     setCurrentTime(`${hours}:${minutes}:${seconds}`);
   }, []);
 
+  const formatTimeAMPM = (timeStr: string) => {
+    const [hoursStr, minutes, seconds] = timeStr.split(':');
+    let hours = parseInt(hoursStr, 10);
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const strHours = hours < 10 ? '0' + hours : hours.toString();
+    return `${strHours}:${minutes}:${seconds || '00'} ${ampm}`;
+  };
+
+  const handleSave = async () => {
+    if (!line) return; // Basic validation
+    
+    // Format date from YYYY-MM-DD to DD/MM/YYYY
+    const [year, month, day] = currentDate.split('-');
+    const formattedDate = `${day}/${month}/${year}`;
+    
+    try {
+      await addQualityCheck({
+        line: line,
+        date: formattedDate,
+        time: formatTimeAMPM(currentTime),
+        status: "New",
+        samplingPoint: "Manual Entry",
+        occasion: "Manual sampling",
+        testArea: "Unassigned",
+        samples: "0/1",
+        productType: "-",
+        productBrandName: "-",
+        batchId: "-",
+        expectedInsertionDate: formattedDate,
+        buc: false
+      }).unwrap();
+      
+      onClose(); // Close modal on success
+    } catch (err) {
+      console.error("Failed to save the quality check: ", err);
+    }
+  };
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-window" onClick={(e) => e.stopPropagation()}>
@@ -37,12 +81,16 @@ export default function SamplingModal({ onClose }: SamplingModalProps) {
             
             <div className="form-group">
               <label>{t("Lines")}</label>
-              <select className="standard-select" defaultValue="">
+              <select 
+                className="standard-select" 
+                value={line} 
+                onChange={(e) => setLine(e.target.value)}
+              >
                 <option value="" disabled hidden>{t("Search & Select")}</option>
-                <option>Packaging Line A</option>
-                <option>Packaging Line B</option>
-                <option>Packaging Line C</option>
-                <option>Packaging Line D</option>
+                <option value="Packaging Line A">Packaging Line A</option>
+                <option value="Packaging Line B">Packaging Line B</option>
+                <option value="Packaging Line C">Packaging Line C</option>
+                <option value="Packaging Line D">Packaging Line D</option>
               </select>
             </div>
 
@@ -71,7 +119,15 @@ export default function SamplingModal({ onClose }: SamplingModalProps) {
         </div>
 
         <div className="modal-footer">
-          <button className="btn-cancel" onClick={onClose}>{t("Cancel")}</button>
+          <button className="btn-cancel" onClick={onClose} disabled={isLoading}>{t("Cancel")}</button>
+          <button 
+            className="btn-apply" 
+            onClick={handleSave} 
+            disabled={!line || isLoading}
+            style={{ marginLeft: '12px' }}
+          >
+            {isLoading ? "Saving..." : "Save"}
+          </button>
         </div>
       </div>
     </div>

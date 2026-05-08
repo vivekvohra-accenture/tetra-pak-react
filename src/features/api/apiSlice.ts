@@ -90,6 +90,15 @@ export const apiSlice = createApi({
       },
       providesTags: ['QualityCheck'],
     }),
+
+    addQualityCheck: builder.mutation<QualityCheckRecord, Partial<QualityCheckRecord>>({
+      query: (newCheck) => ({
+        url: '/qualityChecks',
+        method: 'POST',
+        body: newCheck,
+      }),
+      invalidatesTags: ['QualityCheck'],
+    }),
   }),
 });
 
@@ -97,5 +106,6 @@ export const {
   useGetUsersQuery,
   useLazyGetUserByEmailQuery,
   useCreateUserMutation,
-  useGetQualityChecksQuery
+  useGetQualityChecksQuery,
+  useAddQualityCheckMutation
 } = apiSlice;
