@@ -52,7 +52,16 @@ export const apiSlice = createApi({
       invalidatesTags: ['User'], // Invalidate users list when a new user is created
     }),
 
-    getQualityChecks: builder.query<QualityCheckRecord[], { status: string; lines?: string[] }>({
+    getQualityChecks: builder.query<QualityCheckRecord[], { 
+      status: string; 
+      lines?: string[];
+      samplingPoint?: string;
+      testArea?: string;
+      occasion?: string;
+      batchId?: string;
+      productType?: string;
+      productBrandName?: string;
+    }>({
         query: (filters) => {
         // Start building the query string for json-server
         let queryString = '/qualityChecks?';
@@ -68,6 +77,14 @@ export const apiSlice = createApi({
             queryString += `line=${encodeURIComponent(line)}&`;
           });
         }
+        
+        if (filters.samplingPoint) queryString += `samplingPoint=${encodeURIComponent(filters.samplingPoint)}&`;
+        if (filters.testArea) queryString += `testArea=${encodeURIComponent(filters.testArea)}&`;
+        if (filters.occasion) queryString += `occasion=${encodeURIComponent(filters.occasion)}&`;
+        if (filters.batchId) queryString += `batchId=${encodeURIComponent(filters.batchId)}&`;
+        if (filters.productType) queryString += `productType=${encodeURIComponent(filters.productType)}&`;
+        if (filters.productBrandName) queryString += `productBrandName=${encodeURIComponent(filters.productBrandName)}&`;
+
         // Remove the trailing '&' or '?' for a clean URL
         return queryString.slice(0, -1);
       },

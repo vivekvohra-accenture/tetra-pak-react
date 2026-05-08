@@ -15,12 +15,21 @@ export default function FilterPanel({ onClose, setAppliedFilters, currentFilters
   const [selectedLines, setSelectedLines] = useState<string[]>(currentFilters.lines || []);
   const [isLinesOpen, setIsLinesOpen] = useState(false);
   
+  const [samplingPoint, setSamplingPoint] = useState(currentFilters.samplingPoint || "");
+  const [testAreaGroup, setTestAreaGroup] = useState(currentFilters.testAreaGroup || "");
+  const [testArea, setTestArea] = useState(currentFilters.testArea || "");
+  const [occasion, setOccasion] = useState(currentFilters.occasion || "");
+  
   const [showExpired, setShowExpired] = useState(currentFilters.showExpired ?? true);
   const [notReady, setNotReady] = useState(currentFilters.notReady ?? true);
 
   // Accordions
   const [isTimeOpen, setIsTimeOpen] = useState(true);
   const [isProductOpen, setIsProductOpen] = useState(false); // Closed by default to save space
+  
+  const [batchId, setBatchId] = useState(currentFilters.batchId || "");
+  const [productType, setProductType] = useState(currentFilters.productType || "");
+  const [productBrandName, setProductBrandName] = useState(currentFilters.productBrandName || "");
 
   const handleLineToggle = (lineName: string) => {
     setSelectedLines(prev => 
@@ -32,14 +41,28 @@ export default function FilterPanel({ onClose, setAppliedFilters, currentFilters
 
   const handleClearAll = () => {
     setSelectedLines([]);
+    setSamplingPoint("");
+    setTestAreaGroup("");
+    setTestArea("");
+    setOccasion("");
     setShowExpired(false);
     setNotReady(false);
+    setBatchId("");
+    setProductType("");
+    setProductBrandName("");
   };
 
   const onClickApply = () => {
     setAppliedFilters({
       ...currentFilters,
       lines: selectedLines,
+      samplingPoint,
+      testAreaGroup,
+      testArea,
+      occasion,
+      batchId,
+      productType,
+      productBrandName,
       showExpired,
       notReady,
       dateRange: '01/04/2026 - 02/04/2026',
@@ -88,30 +111,59 @@ export default function FilterPanel({ onClose, setAppliedFilters, currentFilters
 
             <div className="form-group">
               <label>{t("Sampling point")}</label>
-              <select className="standard-select">
-                <option value="" disabled selected hidden>{t("Search & Select")}</option>
+              <select className="standard-select" value={samplingPoint} onChange={(e) => setSamplingPoint(e.target.value)}>
+                <option value="" disabled hidden>{t("Search & Select")}</option>
+                <option value="">All</option>
+                <option>Warehouse Test 1</option>
+                <option>Filler Outfeed</option>
+                <option>Accumulator</option>
+                <option>Palletizer</option>
+                <option>Straw Applicator</option>
+                <option>Warehouse Test 2</option>
+                <option>Cap Applicator</option>
               </select>
             </div>
 
             <div className="form-group">
               <label>{t("Test Area Group")}</label>
-              <select className="standard-select">
-                <option value="" disabled selected hidden>{t("Search & Select")}</option>
+              <select className="standard-select" value={testAreaGroup} onChange={(e) => setTestAreaGroup(e.target.value)}>
+                <option value="" disabled hidden>{t("Search & Select")}</option>
+                <option value="">All</option>
               </select>
             </div>
 
             <div className="form-group">
               <label>{t("Test area")}</label>
-              <select className="standard-select">
-                <option value="" disabled selected hidden>{t("Search & Select")}</option>
+              <select className="standard-select" value={testArea} onChange={(e) => setTestArea(e.target.value)}>
+                <option value="" disabled hidden>{t("Search & Select")}</option>
+                <option value="">All</option>
+                <option>Immediate@ProdFloor</option>
+                <option>IT_TEST_AREA</option>
+                <option>Microbiology Lab</option>
+                <option>Quality Lab</option>
+                <option>Mechanics Lab</option>
+                <option>Destructive Lab</option>
               </select>
             </div>
           </div>
 
           <div className="form-group" style={{ marginBottom: '24px' }}>
             <label>{t("Sampling Occasion")}</label>
-            <select className="standard-select">
-              <option value="" disabled selected hidden>{t("Search & Select")}</option>
+            <select className="standard-select" value={occasion} onChange={(e) => setOccasion(e.target.value)}>
+              <option value="" disabled hidden>{t("Search & Select")}</option>
+              <option value="">All</option>
+              <option>Resampling from warehouse inspection POST</option>
+              <option>Standard hourly check</option>
+              <option>Format change verification</option>
+              <option>Shift start check</option>
+              <option>End of batch check</option>
+              <option>Adhesion test</option>
+              <option>Seal integrity check</option>
+              <option>Routine inspection</option>
+              <option>Volume weight check</option>
+              <option>Torque test</option>
+              <option>Visual defect check</option>
+              <option>Incubation release</option>
             </select>
           </div>
 
@@ -182,20 +234,42 @@ export default function FilterPanel({ onClose, setAppliedFilters, currentFilters
               <div className="accordion-body">
                 <div className="form-group">
                   <label>{t("Batch ID")}</label>
-                  <select className="standard-select">
-                    <option value="" disabled selected hidden>{t("Search & Select")}</option>
+                  <select className="standard-select" value={batchId} onChange={(e) => setBatchId(e.target.value)}>
+                    <option value="" disabled hidden>{t("Search & Select")}</option>
+                    <option value="">All</option>
+                    <option>BCH-8821</option>
+                    <option>BCH-8822</option>
+                    <option>BCH-8819</option>
+                    <option>BCH-8815</option>
+                    <option>BCH-8814</option>
+                    <option>BCH-8790</option>
+                    <option>BCH-8788</option>
+                    <option>BCH-8785</option>
+                    <option>BCH-8750</option>
+                    <option>BCH-8745</option>
                   </select>
                 </div>
                 <div className="form-group" style={{ marginTop: '16px' }}>
                   <label>{t("Product Type")}</label>
-                  <select className="standard-select">
-                    <option value="" disabled selected hidden>{t("Search & Select")}</option>
+                  <select className="standard-select" value={productType} onChange={(e) => setProductType(e.target.value)}>
+                    <option value="" disabled hidden>{t("Search & Select")}</option>
+                    <option value="">All</option>
+                    <option>Tetra Brik</option>
+                    <option>Tetra Prisma</option>
+                    <option>Tetra Gemina</option>
                   </select>
                 </div>
                 <div className="form-group" style={{ marginTop: '16px' }}>
                   <label>{t("Product Brand Name")}</label>
-                  <select className="standard-select">
-                    <option value="" disabled selected hidden>{t("Search & Select")}</option>
+                  <select className="standard-select" value={productBrandName} onChange={(e) => setProductBrandName(e.target.value)}>
+                    <option value="" disabled hidden>{t("Search & Select")}</option>
+                    <option value="">All</option>
+                    <option>Aseptic 1000 Edge</option>
+                    <option>Aseptic 330 Sq</option>
+                    <option>Aseptic 1000 Base</option>
+                    <option>Aseptic 200 Slim</option>
+                    <option>Aseptic 1000 Sq</option>
+                    <option>Aseptic 1000 Crystal</option>
                   </select>
                 </div>
               </div>

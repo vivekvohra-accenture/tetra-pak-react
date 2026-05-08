@@ -16,6 +16,13 @@ export default function QualityChecks() {
   // This is the "Single Source of Truth" for the active filters
   const [appliedFilters, setAppliedFilters] = useState({
     lines: [] as string[],
+    samplingPoint: "",
+    testAreaGroup: "",
+    testArea: "",
+    occasion: "",
+    batchId: "",
+    productType: "",
+    productBrandName: "",
     showExpired: true,
     notReady: true,
     dateRange: '01/04/2026 - 02/04/2026',
@@ -25,7 +32,13 @@ export default function QualityChecks() {
   // THE MAGIC HOOK: It runs automatically when these variables change!
   const { data: records = [], isLoading, isFetching } = useGetQualityChecksQuery({
     status: activeTab, // Filter by Tab
-    lines: appliedFilters.lines // Filter by Drawer selections
+    lines: appliedFilters.lines, // Filter by Drawer selections
+    samplingPoint: appliedFilters.samplingPoint,
+    testArea: appliedFilters.testArea,
+    occasion: appliedFilters.occasion,
+    batchId: appliedFilters.batchId,
+    productType: appliedFilters.productType,
+    productBrandName: appliedFilters.productBrandName
   });
 
   return (
@@ -44,6 +57,12 @@ export default function QualityChecks() {
           <span className="filter-label-text">{t("Filters:")}</span>
           {appliedFilters.showExpired && <span className="filter-badge">{t("Show expired")}</span>}
           {appliedFilters.notReady && <span className="filter-badge">{t("Not ready for result insertion")}</span>}
+          {appliedFilters.samplingPoint && <span className="filter-badge">{appliedFilters.samplingPoint}</span>}
+          {appliedFilters.testArea && <span className="filter-badge">{appliedFilters.testArea}</span>}
+          {appliedFilters.occasion && <span className="filter-badge">{appliedFilters.occasion}</span>}
+          {appliedFilters.batchId && <span className="filter-badge">{appliedFilters.batchId}</span>}
+          {appliedFilters.productType && <span className="filter-badge">{appliedFilters.productType}</span>}
+          {appliedFilters.productBrandName && <span className="filter-badge">{appliedFilters.productBrandName}</span>}
           {appliedFilters.dateRange && <span className="filter-badge">{appliedFilters.dateRange}</span>}
           {appliedFilters.timeRange && <span className="filter-badge">{appliedFilters.timeRange}</span>}
         </div>
