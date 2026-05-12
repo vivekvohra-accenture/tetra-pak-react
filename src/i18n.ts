@@ -47,7 +47,6 @@ const resources = {
       "User administration": "User administration",
       "Georegistry": "Georegistry",
       "Parameters settings": "Parameters settings",
-      "Quality checks": "Quality checks",
       "New Sampling confirmation": "New Sampling confirmation",
       "Filters:": "Filters:",
       "Show expired": "Show expired",
@@ -89,7 +88,17 @@ const resources = {
       "Manual sampling not event driven": "Manual sampling not event driven",
       "Production date": "Production date",
       "Production time": "Production time",
-      "Cancel": "Cancel"
+      "Cancel": "Cancel",
+      "Welcome to the Tetra Pak Digital Platform": "Welcome to the Tetra Pak Digital Platform",
+      "Failed to load users": "Failed to load users",
+      "All Users (Admin View)": "All Users (Admin View)",
+      "Loading...": "Loading...",
+      "First Name": "First Name",
+      "Last Name": "Last Name",
+      "Email": "Email",
+      "Mobile": "Mobile",
+      "Role": "Role",
+      "My Profile (Operator View)": "My Profile (Operator View)"
     }
   },
   sv: {
@@ -136,7 +145,6 @@ const resources = {
       "User administration": "Användaradministration",
       "Georegistry": "Georegister",
       "Parameters settings": "Parameterinställningar",
-      "Quality checks": "Kvalitetskontroller",
       "New Sampling confirmation": "Ny provtagningsbekräftelse",
       "Filters:": "Filter:",
       "Show expired": "Visa utgångna",
@@ -178,7 +186,17 @@ const resources = {
       "Manual sampling not event driven": "Manuell provtagning inte händelsestyrd",
       "Production date": "Produktionsdatum",
       "Production time": "Produktionstid",
-      "Cancel": "Avbryt"
+      "Cancel": "Avbryt",
+      "Welcome to the Tetra Pak Digital Platform": "Välkommen till Tetra Pak Digital Plattform",
+      "Failed to load users": "Misslyckades med att ladda användare",
+      "All Users (Admin View)": "Alla användare (Admin-vy)",
+      "Loading...": "Laddar...",
+      "First Name": "Förnamn",
+      "Last Name": "Efternamn",
+      "Email": "E-post",
+      "Mobile": "Mobil",
+      "Role": "Roll",
+      "My Profile (Operator View)": "Min profil (Operatörsvy)"
     }
   },
   es: {
@@ -225,7 +243,6 @@ const resources = {
       "User administration": "Administración de usuarios",
       "Georegistry": "Georregistro",
       "Parameters settings": "Configuración de parámetros",
-      "Quality checks": "Controles de calidad",
       "New Sampling confirmation": "Nueva confirmación de muestreo",
       "Filters:": "Filtros:",
       "Show expired": "Mostrar caducados",
@@ -267,7 +284,17 @@ const resources = {
       "Manual sampling not event driven": "Muestreo manual no impulsado por eventos",
       "Production date": "Fecha de producción",
       "Production time": "Hora de producción",
-      "Cancel": "Cancelar"
+      "Cancel": "Cancelar",
+      "Welcome to the Tetra Pak Digital Platform": "Bienvenido a la Plataforma Digital Tetra Pak",
+      "Failed to load users": "Error al cargar los usuarios",
+      "All Users (Admin View)": "Todos los usuarios (Vista de administrador)",
+      "Loading...": "Cargando...",
+      "First Name": "Nombre",
+      "Last Name": "Apellido",
+      "Email": "Correo electrónico",
+      "Mobile": "Móvil",
+      "Role": "Rol",
+      "My Profile (Operator View)": "Mi perfil (Vista de operador)"
     }
   }
 };

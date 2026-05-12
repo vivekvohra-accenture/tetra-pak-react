@@ -1,11 +1,13 @@
 import { useAppSelector } from "../app/hooks";
 import { useGetUsersQuery } from "../features/api/apiSlice";
+import { useTranslation } from "react-i18next";
 import "./Home.css";
 
 // 1. Notice we REMOVED the DashboardLayout import entirely!
 // 2. We REMOVED the logout logic because the Header handles it now.
 
 export default function Home() {
+  const { t } = useTranslation();
   const currentUser = useAppSelector((state) => state.auth.currentUser);
 
   // RTK Query handles loading, data, and error automatically!
@@ -23,31 +25,31 @@ export default function Home() {
       
       {/* Welcome Message specific to the Home page content area */}
       <h2 style={{ color: '#0f3a61', marginBottom: '24px' }}>
-        Welcome to the Tetra Pak Digital Platform
+        {t("Welcome to the Tetra Pak Digital Platform")}
       </h2>
 
-      {isError && <div className="error-alert">Failed to load users</div>}
+      {isError && <div className="error-alert">{t("Failed to load users")}</div>}
 
       {/* Admin View */}
       {currentUser.role === "ADMIN" ? (
         <div className="admin-panel">
           <div className="panel-header">
-            <h3>All Users (Admin View)</h3>
+            <h3>{t("All Users (Admin View)")}</h3>
           </div>
 
           {isLoading ? (
             <div className="loading-container">
-              <span>Loading...</span>
+              <span>{t("Loading...")}</span>
             </div>
           ) : (
             <table className="users-table">
               <thead>
                 <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th>Mobile</th>
-                  <th>Role</th>
+                  <th>{t("First Name")}</th>
+                  <th>{t("Last Name")}</th>
+                  <th>{t("Email")}</th>
+                  <th>{t("Mobile")}</th>
+                  <th>{t("Role")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,12 +69,12 @@ export default function Home() {
       ) : (
         /* Operator View */
         <div className="profile-card">
-          <h3>My Profile (Operator View)</h3>
-          <p><strong>First Name:</strong> {currentUser.firstName}</p>
-          <p><strong>Last Name:</strong> {currentUser.lastName}</p>
-          <p><strong>Email:</strong> {currentUser.email}</p>
-          <p><strong>Mobile:</strong> {currentUser.mobile}</p>
-          <p><strong>Role:</strong> {currentUser.role}</p>
+          <h3>{t("My Profile (Operator View)")}</h3>
+          <p><strong>{t("First Name")}:</strong> {currentUser.firstName}</p>
+          <p><strong>{t("Last Name")}:</strong> {currentUser.lastName}</p>
+          <p><strong>{t("Email")}:</strong> {currentUser.email}</p>
+          <p><strong>{t("Mobile")}:</strong> {currentUser.mobile}</p>
+          <p><strong>{t("Role")}:</strong> {currentUser.role}</p>
         </div>
       )}
     </div>
